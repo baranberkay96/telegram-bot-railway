@@ -1,0 +1,174 @@
+{
+ "name": "Telegram Bot Starter (python-telegram-bot 22, Postgres)",
+ "idSeed": "Telegram Bot Starter (python-telegram-bot 22, Postgres) / 2026-11-24",
+ "description": "Python Telegram bot on webhooks with notes, reminders and Postgres.",
+ "category": "Bots",
+ "tags": [
+  "telegram",
+  "telegram-bot",
+  "python-telegram-bot",
+  "python",
+  "bot",
+  "webhook",
+  "postgres",
+  "starter"
+ ],
+ "image": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/telegram.svg",
+ "upstream": {
+  "library": "python-telegram-bot 22.8 (LGPL-3.0)",
+  "python": "python:3.13.18-slim-trixie@sha256:6d68eb6310a906f26c7638eb6ea7557d4261662df3181af2f80f1f9a7e34c549",
+  "asyncpg": "0.32.0",
+  "aiohttp": "3.14.5",
+  "checked": "2026-11-24"
+ },
+ "services": {
+  "Bot": {
+   "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/telegram.svg",
+   "source": {
+    "repo": "baranberkay96/telegram-bot-railway",
+    "rootDirectory": "/services/bot"
+   },
+   "startCommand": null,
+   "preDeployCommand": null,
+   "healthcheckPath": "/healthz",
+   "healthcheckTimeout": 300,
+   "restartPolicyType": "ALWAYS",
+   "numReplicas": 1,
+   "cronSchedule": null,
+   "publicDomain": true,
+   "targetPort": 8080,
+   "tcpProxy": null,
+   "volume": null,
+   "variables": {
+    "TELEGRAM_BOT_TOKEN": {
+     "defaultValue": "",
+     "description": "Required: the token from @BotFather (/newbot, or /mybots, your bot, API Token).",
+     "required": true
+    },
+    "DATABASE_URL": {
+     "defaultValue": "${{Postgres.DATABASE_URL}}",
+     "description": "Postgres for notes, reminders and chats (private network). Empty: those commands are off.",
+     "required": false
+    },
+    "BOT_MODE": {
+     "defaultValue": "webhook",
+     "description": "webhook (Telegram calls https://{domain}/telegram) or polling. Without a public domain: polling.",
+     "required": false
+    },
+    "WEBHOOK_SECRET": {
+     "defaultValue": "${{secret(40, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+     "description": "Secret header Telegram sends with every webhook call; other requests get 403.",
+     "required": false
+    },
+    "ADMIN_USER_IDS": {
+     "defaultValue": "",
+     "description": "Optional Telegram user ids (comma-separated) allowed to use /stats. Find yours with /id.",
+     "required": false
+    },
+    "TELEGRAM_API_URL": {
+     "defaultValue": "",
+     "description": "Optional self-hosted Bot API server URL. Empty: https://api.telegram.org.",
+     "required": false
+    },
+    "LOG_LEVEL": {
+     "defaultValue": "INFO",
+     "description": "DEBUG, INFO, WARNING or ERROR. The token is never logged.",
+     "required": false
+    },
+    "PORT": {
+     "defaultValue": "8080",
+     "description": "Port for the webhook and /healthz (Railway's public domain points here).",
+     "required": false
+    },
+    "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+     "defaultValue": "15",
+     "description": "Seconds the old deployment gets to finish updates on redeploy.",
+     "required": false
+    }
+   }
+  },
+  "Postgres": {
+   "icon": "https://devicons.railway.app/i/postgresql.svg",
+   "source": {
+    "image": "ghcr.io/railwayapp-templates/postgres-ssl:18.6@sha256:4fc833b43d2aaf6ecc9b18615f5533602b723a32d0e2efe2dae8ca0f7217c863"
+   },
+   "startCommand": null,
+   "preDeployCommand": null,
+   "healthcheckPath": null,
+   "healthcheckTimeout": null,
+   "restartPolicyType": "ON_FAILURE",
+   "restartPolicyMaxRetries": 10,
+   "numReplicas": 1,
+   "cronSchedule": null,
+   "publicDomain": false,
+   "targetPort": null,
+   "tcpProxy": null,
+   "volume": {
+    "mountPath": "/var/lib/postgresql/data"
+   },
+   "variables": {
+    "PGDATA": {
+     "defaultValue": "/var/lib/postgresql/data/pgdata",
+     "description": "Location where the database will be initialized",
+     "required": false
+    },
+    "PGHOST": {
+     "defaultValue": "${{RAILWAY_PRIVATE_DOMAIN}}",
+     "description": "Railway Private Domain Name.",
+     "required": false
+    },
+    "PGPORT": {
+     "defaultValue": "5432",
+     "description": "Port to connect to Postgres.",
+     "required": false
+    },
+    "PGUSER": {
+     "defaultValue": "${{ POSTGRES_USER }}",
+     "description": "Required variable for Data panel",
+     "required": false
+    },
+    "PGDATABASE": {
+     "defaultValue": "${{POSTGRES_DB}}",
+     "description": "Required variable for the data panel.",
+     "required": false
+    },
+    "PGPASSWORD": {
+     "defaultValue": "${{POSTGRES_PASSWORD}}",
+     "description": "Required variable for Data panel",
+     "required": false
+    },
+    "POSTGRES_DB": {
+     "defaultValue": "railway",
+     "description": "Default database created when image is started.",
+     "required": false
+    },
+    "DATABASE_URL": {
+     "defaultValue": "postgresql://${{PGUSER}}:${{POSTGRES_PASSWORD}}@${{RAILWAY_PRIVATE_DOMAIN}}:5432/${{PGDATABASE}}",
+     "description": "Private connection URL; the bot reads it as DATABASE_URL.",
+     "required": false
+    },
+    "POSTGRES_USER": {
+     "defaultValue": "postgres",
+     "description": "User to connect to Postgres DB",
+     "required": false
+    },
+    "SSL_CERT_DAYS": {
+     "defaultValue": "820",
+     "description": "SSL certificate expiry in days.",
+     "required": false
+    },
+    "POSTGRES_PASSWORD": {
+     "defaultValue": "${{ secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") }}",
+     "description": "Password to connect to DB",
+     "required": false
+    },
+    "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+     "defaultValue": "60",
+     "description": "Allow Postgres to cleanly shut down",
+     "required": false
+    }
+   }
+  }
+ },
+ "buckets": []
+}

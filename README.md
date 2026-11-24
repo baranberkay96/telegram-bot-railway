@@ -71,7 +71,7 @@ Run one replica: Telegram sends each update once, and reminders are claimed with
 
 **Resources**
 
-Measured on Railway: the bot idles at about 60 MB RAM and Postgres at about 100 MB, near 0 vCPU. Trial plan is enough; cost is roughly $1–2/month.
+Measured on Railway: the bot idles at about 60 MB RAM and Postgres at about 110 MB, near 0 vCPU. Trial plan is enough; cost is roughly $1–2/month.
 
 **Not included, on purpose**
 

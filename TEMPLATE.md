@@ -35,7 +35,7 @@ Required input: `TELEGRAM_BOT_TOKEN`. Generated: `WEBHOOK_SECRET` (40 alphanumer
 | Service | Idle RAM | Typical RAM | CPU |
 |---|---|---|---|
 | Bot | ≈60 MB (measured) | 80–150 MB | ≈0 idle |
-| Postgres | ≈100 MB (measured) | 100–200 MB | ≈0 idle |
+| Postgres | ≈110 MB (measured) | 100–200 MB | ≈0 idle |
 
 Estimated cost: about $1–2/month. Minimum plan: Trial.
 

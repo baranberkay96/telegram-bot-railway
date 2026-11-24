@@ -1,5 +1,7 @@
 # Deploy and Host Telegram Bot Starter with Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/telegram-bot-starter-python-telegram-bot?referralCode=20H68q)
+
 A Python Telegram bot that works as soon as you paste the token from @BotFather: it registers its own webhook on the Railway domain, answers commands for notes and reminders, and keeps its data in Postgres. Built on python-telegram-bot 22. It is a starter: eject the repo and add your own handlers.
 
 ## About Hosting Telegram Bot Starter
